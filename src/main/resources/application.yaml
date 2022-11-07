@@ -1,0 +1,8 @@
+server:
+    error:
+        include-stacktrace: never
+
+spring:
+    cache:
+        caffeine:
+            spec: maximumSize=100,expireAfterAccess=1h
