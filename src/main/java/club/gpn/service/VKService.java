@@ -74,7 +74,7 @@ public class VKService {
             f = true;
         }
         if (!isInt(request.getGroup_id()) || Integer.parseInt(request.getGroup_id()) <= 0) {
-            invParams += " Invalid group_id: " + request.getUser_id() + ".";
+            invParams += " Invalid group_id: " + request.getGroup_id() + ".";
             f = true;
         }
         if (f) throw new IllegalParameterException(invParams);
