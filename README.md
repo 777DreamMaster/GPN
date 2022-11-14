@@ -2,7 +2,7 @@
 
 ## Details
 
-RESTful service in Java to get the full name of the VK user, and attribute of the VK group member.
+RESTful Java service to get the full name of the VK user, and attribute of the VK group member.
 VKontakte API is used to work with VK.
 
 ## Available Scripts
