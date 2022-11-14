@@ -1,0 +1,103 @@
+---
+# DB secrets
+apiVersion: v1
+stringData:
+  POSTGRES_DB: "gpn"
+  POSTGRES_PASSWORD: "789456123"
+  POSTGRES_USER: "admin"
+kind: Secret
+metadata:
+  name: psql-creds
+type: Opaque
+---
+# DB Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+    - name: psql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: postgres
+---
+# DB Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - envFrom:
+            - secretRef:
+                name: psql-creds
+          image: 777dreammaster/postgres:0.0.2
+          imagePullPolicy: IfNotPresent
+          name: postgres
+          ports:
+            - containerPort: 5432
+              name: psql
+              protocol: TCP
+      restartPolicy: Always
+---
+# App secrets
+apiVersion: v1
+stringData:
+  DB_PASSWORD: "789456123"
+  DB_URL: "jdbc:postgresql://db:5432/gpn"
+  DB_USERNAME: "admin"
+  DDL_AUTO: "update"
+kind: Secret
+metadata:
+  name: app-creds
+type: Opaque
+---
+# App deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gpn
+  name: gpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpn
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: gpn
+    spec:
+      containers:
+        - envFrom:
+            - secretRef:
+                name: app-creds
+          image: 777dreammaster/gpn:0.0.2
+          imagePullPolicy: IfNotPresent
+          name: gpn
+      restartPolicy: Always
