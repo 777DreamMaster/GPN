@@ -13,7 +13,7 @@ Build docker image from a Dockerfile.
 ### `docker-compose up`
 Create and start containers.
 
-### `kubectl -n gpn-dev apply -f /k8s/k8s.yaml`
+### `kubectl -n gpn-dev apply -f k8s.yaml`
 Apply configuration from a file.\
 Before you need to start minikube `minikube start`,
 create gpn-dev namespace `kubectl create namespace gpn-dev`.
