@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  app:
+    image: 'gpn:latest'
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/gpn
+      - DB_USERNAME=admin
+      - DB_PASSWORD=789456123
+      - DDL_AUTO=update
+
+  db:
+    image: 'postgres:15'
+    container_name: db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=789456123
+      - POSTGRES_DB=gpn
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
