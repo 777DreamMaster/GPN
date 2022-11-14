@@ -1,4 +1,4 @@
-package club.gpn.service;
+package club.gpn.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +13,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Component
-public class VKRepository {
+public class VKRepo {
     private final ObjectMapper MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     @Cacheable(value = "vk")

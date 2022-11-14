@@ -4,7 +4,7 @@ import club.gpn.controller.MemberController;
 import club.gpn.exception.IllegalParameterException;
 import club.gpn.model.ApiRequest;
 import club.gpn.model.Result;
-import club.gpn.service.VKRepository;
+import club.gpn.repository.VKRepo;
 import club.gpn.service.VKService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GpnApplicationTests {
     @Autowired
     CacheManager cacheManager;
-    final MemberController Controller = new MemberController(new VKService(new VKRepository(), cacheManager));
+    final MemberController Controller = new MemberController(new VKService(new VKRepo(), cacheManager));
     ApiRequest correctRequest;
     String correctToken = "dedb9ecbdedb9ecbdedb9ecb09ddcaca3dddedbdedb9ecbbdbe91ed1fa67754ea3e7892";
 

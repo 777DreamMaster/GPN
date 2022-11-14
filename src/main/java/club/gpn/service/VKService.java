@@ -3,6 +3,7 @@ package club.gpn.service;
 import club.gpn.exception.IllegalParameterException;
 import club.gpn.model.ApiRequest;
 import club.gpn.model.Result;
+import club.gpn.repository.VKRepo;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.client.utils.URIBuilder;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class VKService {
     private static final String baseURL = "https://api.vk.com/method/";
     private static final String VERSION = "5.131";
-    private final VKRepository vkRepository;
+    private final VKRepo vkRepo;
     private final CacheManager cacheManager;
 
     public URI createUserURI(String method,
@@ -39,7 +40,7 @@ public class VKService {
             throws URISyntaxException, IOException, InterruptedException {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", request.getUser_id());
-        return vkRepository.sendRequest(createUserURI("users.get", params, access_token));
+        return vkRepo.sendRequest(createUserURI("users.get", params, access_token));
     }
 
     public JsonNode getUserIsMember(ApiRequest request, String access_token)
@@ -47,7 +48,7 @@ public class VKService {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", request.getUser_id());
         params.put("group_id", request.getGroup_id());
-        return vkRepository.sendRequest(createUserURI("groups.isMember", params, access_token));
+        return vkRepo.sendRequest(createUserURI("groups.isMember", params, access_token));
     }
 
     public Result getResponse(ApiRequest body, String token)
